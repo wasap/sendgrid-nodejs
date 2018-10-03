@@ -1,28 +1,27 @@
 'use strict';
-
 /**
  * Dependencies
  */
-const Personalization = require('../personalization');
-const EmailAddress = require('../email-address');
 
+const Personalization = require('../personalization');
+
+const EmailAddress = require('../email-address');
 /**
  * Tests
  */
-describe('Personalization', function () {
 
+
+describe('Personalization', function () {
   //Create new personalization before each test
   let p;
   beforeEach(function () {
     p = new Personalization();
-  });
+  }); //JSON conversion
 
-  //JSON conversion
   describe('toJSON()', function () {
     beforeEach(function () {
       p.setTo('test@example.org');
     });
-
     it('should always have the to field', function () {
       const json = p.toJSON();
       expect(json).to.have.property('to');
@@ -50,27 +49,36 @@ describe('Personalization', function () {
       expect(json.bcc[0].email).to.equal('testbcc@example.org');
     });
     it('should set the headers field', function () {
-      p.setHeaders({ test: 'Test' });
+      p.setHeaders({
+        test: 'Test'
+      });
       const json = p.toJSON();
       expect(json).to.have.property('headers');
       expect(json.headers).to.be.an.instanceof(Object);
       expect(json.headers.test).to.equal('Test');
     });
     it('should set the custom_args field', function () {
-      p.setCustomArgs({ test: 'Test' });
+      p.setCustomArgs({
+        test: 'Test'
+      });
       const json = p.toJSON();
       expect(json).to.have.property('custom_args');
       expect(json.custom_args).to.be.an.instanceof(Object);
       expect(json.custom_args.test).to.equal('Test');
     });
     it('should set the substitutions field', function () {
-      p.setSubstitutions({ test: 'Test' });
+      p.setSubstitutions({
+        test: 'Test'
+      });
       const json = p.toJSON();
       expect(json).to.have.property('substitutions');
       expect(json.substitutions).to.be.an.instanceof(Object);
     });
     it('should apply wrappers to the substitutions', function () {
-      p.setSubstitutions({ test: 'Test', otherTest2: 'Test2' });
+      p.setSubstitutions({
+        test: 'Test',
+        otherTest2: 'Test2'
+      });
       p.setSubstitutionWrappers(['{{', '}}']);
       const json = p.toJSON();
       expect(json.substitutions).to.have.property('{{test}}');
@@ -81,7 +89,9 @@ describe('Personalization', function () {
       expect(json.substitutions).not.to.have.property('otherTest2');
     });
     it('should set the dynamicTemplateData field', function () {
-      p.setDynamicTemplateData({ test: 'Test' });
+      p.setDynamicTemplateData({
+        test: 'Test'
+      });
       const json = p.toJSON();
       expect(json).to.have.property('dynamic_template_data');
       expect(json.dynamic_template_data).to.be.an.instanceof(Object);
@@ -101,8 +111,16 @@ describe('Personalization', function () {
     it('should not modify the keys of substitutions and custom args', () => {
       const data = {
         to: 'to@example.org',
-        customArgs: { snake_case: 'Test', T_EST: 'Test', camelCase: 'Test' },
-        substitutions: { snake_case: 'Test', T_EST: 'Test', camelCase: 'Test' },
+        customArgs: {
+          snake_case: 'Test',
+          T_EST: 'Test',
+          camelCase: 'Test'
+        },
+        substitutions: {
+          snake_case: 'Test',
+          T_EST: 'Test',
+          camelCase: 'Test'
+        }
       };
       p.fromData(data);
       const json = p.toJSON();
@@ -122,7 +140,11 @@ describe('Personalization', function () {
     it('should not modify the keys of dynamic template data', () => {
       const data = {
         to: 'to@example.org',
-        dynamicTemplateData: { snake_case: 'Test', T_EST: 'Test', camelCase: 'Test' },
+        dynamicTemplateData: {
+          snake_case: 'Test',
+          T_EST: 'Test',
+          camelCase: 'Test'
+        }
       };
       p.fromData(data);
       const json = p.toJSON();

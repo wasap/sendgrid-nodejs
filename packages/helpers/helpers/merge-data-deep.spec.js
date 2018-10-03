@@ -1,34 +1,36 @@
 'use strict';
-
 /**
  * Dependencies
  */
-const mergeDataDeep = require('./merge-data-deep');
 
+const mergeDataDeep = require('./merge-data-deep');
 /**
  * Tests
  */
-describe('mergeDataDeep', function () {
 
+
+describe('mergeDataDeep', function () {
   //Test objects
   const obj1 = {
     a: 1,
     b: 2,
-    e: { g: 9 },
-    arr: ['a', 'b'],
+    e: {
+      g: 9
+    },
+    arr: ['a', 'b']
   };
   const obj2 = {
     a: 3,
     c: 3,
     d: 4,
-    e: { f: 6 },
-    arr: ['c'],
-  };
+    e: {
+      f: 6
+    },
+    arr: ['c']
+  }; //Merge
 
-  //Merge
-  const merged = mergeDataDeep(obj1, obj2);
+  const merged = mergeDataDeep(obj1, obj2); //Tests
 
-  //Tests
   it('should merge the two objects', function () {
     expect(merged).to.have.property('a');
     expect(merged).to.have.property('b');
